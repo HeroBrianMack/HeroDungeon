@@ -1,5 +1,6 @@
 print("test")
 # Creating Empty 3x5 List
+# Note: Possibly make 3D for future mapping
 Dungeon = [[0] * 5] * 3
 # Filling List
 # Floor 1
@@ -20,4 +21,14 @@ Dungeon[2][1] = "Sword"
 Dungeon[2][2] = "Gate"
 Dungeon[2][3] = "Boss"
 Dungeon[2][4] = "End"
-print(Dungeon)
+
+def game_run() : 
+    gameEnd = False
+    while not gameEnd:
+        gameEnd = True
+def game_start() :
+    print("You wake up disoriented.")
+    input("Press enter to continue")
+    print("The last thing you remember was some aggressive marketing from Truck-kun.\n")
+    game_run()
+game_start()
