@@ -31,11 +31,15 @@ def setup() :
     Dungeon[0][3][1] = "LadderDown"
     Dungeon[0][4][1] = "Stone"
     # Floor 3
-    Dungeon[0][0][2] = "LadderUp"
+    Dungeon[0][0][2] = "LadderDown"
     Dungeon[0][1][2] = "Sword"
     Dungeon[0][2][2] = "Gate"
     Dungeon[0][3][2] = "Boss"
     Dungeon[0][4][2] = "End"
+    for i in range(5) :
+        for j in range(3) :
+            Dungeon[1][i][j] = "Unmapped"
+    Dungeon[1][Room][Floor] = "Mapped"
 def continue_enter() :
     input("Press enter to continue")
 def options() :
@@ -43,9 +47,36 @@ def options() :
           "1. Search\n"
           "2. Fight\n"
           "3. Move\n"
-          "4. Give up")
+          "4. Give up\n"
+          "5. Map")
     #choice = 
     return input("Choose an option (1-4): ")
+def map() :
+    for j in range(2, -1, -1) :
+        for i in range(5) :
+            Label = ""
+            if (Dungeon[1][i][j] == "Mapped") :
+                if (Dungeon[0][i][j] == "LadderDown" or
+                    Dungeon[0][i][j] == "LadderUp") :
+                    Label = "L"
+                elif (Dungeon[0][i][j] == "Empty") :
+                    Label = "E"
+                elif (Dungeon[0][i][j] == "Monster") :
+                    Label = "M"
+                elif (Dungeon[0][i][j] == "Sword") :
+                    Label = "S"
+                elif (Dungeon[0][i][j] == "Stone") :
+                    Label = "R"
+                elif (Dungeon[0][i][j] == "Gate") :
+                    Label = "G"
+                elif (Dungeon[0][i][j] == "Boss") :
+                    Label = "B"
+                elif (Dungeon[0][i][j] == "End") :
+                    Label = "F"
+            else :
+                Label = "X"
+            print(Label, end = " ")
+        print("")
 def pickup(choice) :
     global Room
     global Floor
@@ -148,6 +179,8 @@ def room_move(move) :
             print("You attempt to climb down the ladder going up, and you are now on the floor.")
         else :
             print("You try to climb down ladder made of air into the floor, you are now laying on the ground.")
+    if (Dungeon[1][Room][Floor] != "Mapped") :
+        Dungeon[1][Room][Floor] = "Mapped"
     continue_enter()
 
 def interact() :
@@ -262,7 +295,9 @@ def game_run() :
     setup()
     while not gameEnd:
         choice = options()
-        if (choice == "4"):
+        if (choice == "5") :
+            map()
+        elif (choice == "4"):
             gameEnd = True
         elif (choice == "3"):
             room_move(input("Where do you want to move?\n"
